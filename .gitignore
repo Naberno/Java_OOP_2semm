@@ -27,3 +27,9 @@ hs_err_pid*
 # IDEA
 .idea/
 *.iml
+
+# project build
+/.metadata
+/robots/.settings
+/robots/bin
+eclipse.bat
