@@ -20,15 +20,19 @@ import javax.swing.JOptionPane;
 import log.Logger;
 
 /**
- * Что требуется сделать:
- * 1. Метод создания меню перегружен функционалом и трудно читается. 
- * Следует разделить его на серию более простых методов (или вообще выделить отдельный класс).
- *
+ * Класс, представляющий главное окно приложения.
  */
 public class MainApplicationFrame extends JFrame
 {
+    /**
+     * Панель для дочерних окон.
+     */
     private final JDesktopPane desktopPane = new JDesktopPane();
-    
+
+
+    /**
+     * Конструктор класса.
+     */
     public MainApplicationFrame() {
         //Make the big window be indented 50 pixels from each edge
         //of the screen.
@@ -74,6 +78,11 @@ public class MainApplicationFrame extends JFrame
     }
 
 
+    /**
+     * Создает и настраивает окно журнала.
+     *
+     * @return Объект класса LogWindow.
+     */
     protected LogWindow createLogWindow()
     {
         LogWindow logWindow = new LogWindow(Logger.getDefaultLogSource());
@@ -84,7 +93,12 @@ public class MainApplicationFrame extends JFrame
         Logger.debug("Протокол работает");
         return logWindow;
     }
-    
+
+    /**
+     * Добавляет дочернее окно на панель дочерних окон.
+     *
+     * @param frame Дочернее окно.
+     */
     protected void addWindow(JInternalFrame frame)
     {
         desktopPane.add(frame);
@@ -119,7 +133,12 @@ public class MainApplicationFrame extends JFrame
 // 
 //        return menuBar;
 //    }
-    
+
+    /**
+     * Создает и настраивает панель меню.
+     *
+     * @return Объект класса JMenuBar.
+     */
     private JMenuBar generateMenuBar()
     {
         JMenuBar menuBar = new JMenuBar();
@@ -161,12 +180,12 @@ public class MainApplicationFrame extends JFrame
         }
 
         JMenuItem exitItem = new JMenuItem("Выход", KeyEvent.VK_X | KeyEvent.VK_ALT);
+        exitItem.setMaximumSize(new Dimension(60, 20));
         exitItem.addActionListener((event) -> {
             int result = JOptionPane.showConfirmDialog(null, "Вы уверены?", "Выход",
                     JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.YES_OPTION) {
-                Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(
-                        new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+                System.exit(0);
             }
         });
 
@@ -175,7 +194,12 @@ public class MainApplicationFrame extends JFrame
         menuBar.add(testMenu);
         return menuBar;
     }
-    
+
+    /**
+     * Устанавливает режим отображения приложения.
+     *
+     * @param className Имя класса LookAndFeel.
+     */
     private void setLookAndFeel(String className)
     {
         try
